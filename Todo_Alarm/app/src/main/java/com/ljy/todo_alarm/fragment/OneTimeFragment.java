@@ -1,6 +1,5 @@
-package com.ljy.todo_alarm;
+package com.ljy.todo_alarm.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ljy.todo_alarm.databinding.FragmentHomeBinding;
+import com.ljy.todo_alarm.databinding.FragmentOneTimeBinding;
 
-public class HomeFragment extends Fragment {
+public class OneTimeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+    private FragmentOneTimeBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(getLayoutInflater());
+        binding = FragmentOneTimeBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }
 
@@ -26,10 +25,5 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.addAlarm.setOnClickListener(v -> {
-            Intent intent = new Intent(getContext(), AddAlarmActivity.class);
-            startActivity(intent);
-        });
     }
 }

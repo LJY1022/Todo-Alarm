@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.tabs.TabLayout;
 import com.ljy.todo_alarm.databinding.ActivityMainBinding;
+import com.ljy.todo_alarm.fragment.HomeFragment;
+import com.ljy.todo_alarm.fragment.OneTimeFragment;
+import com.ljy.todo_alarm.fragment.RepeatFragment;
 
 public class MainActivity extends AppCompatActivity {
 

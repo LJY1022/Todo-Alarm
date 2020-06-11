@@ -1,4 +1,4 @@
-package com.ljy.todo_alarm;
+package com.ljy.todo_alarm.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.ljy.todo_alarm.databinding.FragmentOneTimeBinding;
+import com.ljy.todo_alarm.databinding.FragmentRepeatBinding;
 
-public class OneTimeFragment extends Fragment {
+public class RepeatFragment extends Fragment {
 
-    private FragmentOneTimeBinding binding;
+    private FragmentRepeatBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentOneTimeBinding.inflate(getLayoutInflater());
+        binding = FragmentRepeatBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }
 
