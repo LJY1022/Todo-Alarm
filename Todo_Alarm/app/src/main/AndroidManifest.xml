@@ -11,16 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name=".AlarmService"
-            android:enabled="true"
-            android:exported="true"></service>
-
         <activity android:name=".AlarmActivity" />
 
         <receiver android:name=".AlarmReceiver">
             <intent-filter>
-                <action android:name="com.start.alarmtestous.ALARM_START" />
+                <action android:name="android.intent.action.Alarm" />
             </intent-filter>
         </receiver>
 
