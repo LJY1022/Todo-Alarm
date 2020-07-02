@@ -1,19 +1,30 @@
 package com.ljy.todo_alarm;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ljy.todo_alarm.databinding.ActivityAlarmBinding;
+
 public class AlarmActivity extends AppCompatActivity {
+
+    ActivityAlarmBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alarm);
-        Log.i("asdf","AlarmActivity is started");
+        binding = ActivityAlarmBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        Toast.makeText(this, "AlarmActivity 실행됨", Toast.LENGTH_SHORT).show();
+        binding.finishButton.setOnClickListener(v -> {
+            finish();
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        Toast.makeText(this, "종료 버튼을 눌러주세요", Toast.LENGTH_SHORT).show();
     }
 }

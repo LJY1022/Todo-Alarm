@@ -2,10 +2,9 @@ package com.ljy.todo_alarm;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +24,7 @@ public class AddAlarmActivity extends AppCompatActivity {
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
 
-
-    BroadcastReceiver receiver;
+    AlarmDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +33,9 @@ public class AddAlarmActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        receiver = new AlarmReceiver();
-
-        IntentFilter filter = new IntentFilter("android.intent.action.Alarm");
-        this.registerReceiver(receiver, filter);
+        db = AlarmDatabase.getInstance(this);
 
         Intent intent = new Intent(this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 
@@ -79,19 +73,66 @@ public class AddAlarmActivity extends AppCompatActivity {
             } else if (position == 1) {
                 Toast.makeText(getApplicationContext(), "onetimeAlarm", Toast.LENGTH_SHORT).show();
 
+                int month = binding.onetimeDatePicker.getMonth();
+                int day = binding.onetimeDatePicker.getDayOfMonth();
+                int hour = binding.onetimeTimePicker.getHour();
+                int minute = binding.onetimeTimePicker.getMinute();
+
+                Alarm alarm = new Alarm();
+
+                String date = "" + binding.onetimeDatePicker.getYear() + "년 ";
+                date += (month < 10) ? "0" + (month + 1) : (month + 1);
+                date += "월 ";
+                date += (day < 10) ? "0" + day : day;
+                date += "일";
+                String time = "" + hour + "시 ";
+                time += (minute < 10) ? "0" + minute : minute;
+                time += "분";
+
+                alarm.setDate(date);
+                alarm.setTime(time);
+                alarm.setContents(binding.onetimeEditText.getText().toString());
+
+                new insertTask().execute(alarm);
+                new getIdTask().execute();
+                pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_NO_CREATE);
+
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, binding.onetimeDatePicker.getYear());
-                calendar.set(Calendar.MONTH, binding.onetimeDatePicker.getMonth());
-                calendar.set(Calendar.DAY_OF_MONTH, binding.onetimeDatePicker.getDayOfMonth());
-                calendar.set(Calendar.HOUR_OF_DAY, binding.onetimeTimePicker.getHour());
-                calendar.set(Calendar.MINUTE, binding.onetimeTimePicker.getMinute());
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DATE, day);
+                calendar.set(Calendar.HOUR_OF_DAY, hour);
+                calendar.set(Calendar.MINUTE, minute);
+                calendar.set(Calendar.SECOND, 0);
 
-                Log.i("asdf", "result : " + calendar.get(Calendar.YEAR) + ", " + calendar.get(Calendar.MONTH) + ", " + calendar.get(Calendar.DAY_OF_MONTH) + " /  " + calendar.get(Calendar.HOUR_OF_DAY) + ", " + calendar.get(Calendar.MINUTE));
+                Log.i("asdf", "result : " + calendar.get(Calendar.YEAR) + ", " + calendar.get(Calendar.MONTH) + ", " + calendar.get(Calendar.DATE) + " /  " + calendar.get(Calendar.HOUR_OF_DAY) + ", " + calendar.get(Calendar.MINUTE));
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
                 finish();
             }
         });
+    }
+
+    class getIdTask extends AsyncTask<Void, Void, Integer> {
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            super.onPostExecute(integer);
+            Log.i("asdf", " id : " + integer);
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            return db.getAlarmDao().getId();
+        }
+    }
+
+    class insertTask extends AsyncTask<Alarm, Void, Void> {
+        @Override
+        protected Void doInBackground(Alarm... alarms) {
+            db.getAlarmDao().insert(alarms[0]);
+            return null;
+        }
     }
 }
