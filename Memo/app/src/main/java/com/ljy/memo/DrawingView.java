@@ -104,15 +104,11 @@ public class DrawingView extends View implements View.OnTouchListener {
             outStream.close();
 
             // 갤러리에 변경을 알려줌
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                // 안드로이드 버전이 Kitkat 이상 일때
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri contentUri = Uri.fromFile(file);
-                mediaScanIntent.setData(contentUri);
-                context.sendBroadcast(mediaScanIntent);
-            } else {
-                context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-            }
+            // 안드로이드 버전이 Kitkat 이상 일때
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(file);
+            mediaScanIntent.setData(contentUri);
+            context.sendBroadcast(mediaScanIntent);
 
             Toast.makeText(context.getApplicationContext(), "저장완료", Toast.LENGTH_LONG).show();
         } catch (IOException e) {
