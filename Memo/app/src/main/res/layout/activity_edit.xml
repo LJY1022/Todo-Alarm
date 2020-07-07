@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditActivity">
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:hint="제목"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/contents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:hint="내용을 입력하세요"
+        android:inputType="textPersonName|textMultiLine"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/memoImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/drawingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <com.ljy.memo.DrawingView
+            android:id="@+id/drawingView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:background="#fff" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:weightSum="7">
+
+            <Button
+                android:id="@+id/colorBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:background="@android:color/black"/>
+
+            <Button
+                android:id="@+id/upWidthBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="▲"
+                tools:ignore="ButtonStyle,HardcodedText,NestedWeights" />
+
+            <TextView
+                android:id="@+id/width"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="3"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                tools:ignore="ButtonStyle,HardcodedText,NestedWeights" />
+
+            <Button
+                android:id="@+id/downWidthBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:text="▼"
+                tools:ignore="ButtonStyle,HardcodedText,NestedWeights" />
+
+            <Button
+                android:id="@+id/resetBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="2"
+                android:text="모두 지우기"
+                tools:ignore="ButtonStyle,HardcodedText,NestedWeights" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
