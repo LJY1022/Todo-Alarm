@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ljy.memo.databinding.ActivityMainBinding;
 
+import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MemoAdapter.OnMemoClickListener {
 
-    private ActivityMainBinding binding;
     private MemoDatabase db;
     private MemoAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         db = MemoDatabase.getInstance(this);
@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements MemoAdapter.OnMem
 
         binding.floatingActionButton.setOnClickListener(v -> {
             Intent intent = new Intent(this, EditActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
             startActivity(intent);
         });
 
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements MemoAdapter.OnMem
         intent.putExtra("date", memo.getDate());
         intent.putExtra("imagePath", memo.getImagePath());
 
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(intent);
     }
 
@@ -81,8 +83,11 @@ public class MainActivity extends AppCompatActivity implements MemoAdapter.OnMem
     class SelectTask extends AsyncTask<Memo, Void, List<Memo>> {
         @Override
         protected List<Memo> doInBackground(Memo... memos) {
-            if (memos.length != 0)
+            if (memos.length != 0) {
+                File file = new File(memos[0].imagePath);
+                file.delete();
                 db.getMemoDao().delete(memos[0]);
+            }
             return db.getMemoDao().select();
         }
 

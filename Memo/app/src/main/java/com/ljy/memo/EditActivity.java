@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -99,9 +101,9 @@ public class EditActivity extends AppCompatActivity {
             item.title = binding.title.getText().toString();
             item.contents = binding.contents.getText().toString();
             item.date = LocalDateTime.now().toString();
-            if (imagePath == null)
+            if (imagePath == null) {
                 item.imagePath = binding.drawingView.save(this);
-            else {
+            } else {
                 item.imagePath = imagePath;
             }
             new SaveTask().execute(item);
