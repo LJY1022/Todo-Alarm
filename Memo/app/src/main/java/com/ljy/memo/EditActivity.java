@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -91,11 +89,11 @@ public class EditActivity extends AppCompatActivity {
         });
     }
 
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onBackPressed() {
         if (binding.title.getText().toString().isEmpty() || binding.contents.getText().toString().isEmpty()) {
-            Toast.makeText(this, "제목, 내용이 없어 저장하지 못했습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "제목 또는 내용이 없어 저장하지 못했습니다", Toast.LENGTH_SHORT).show();
         } else {
             Memo item = new Memo();
             item.title = binding.title.getText().toString();
@@ -108,6 +106,7 @@ public class EditActivity extends AppCompatActivity {
             }
             new SaveTask().execute(item);
         }
+        super.onBackPressed();
     }
 
     class SaveTask extends AsyncTask<Memo, Void, Void> {
