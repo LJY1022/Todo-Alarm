@@ -53,19 +53,14 @@ public class DrawingView extends View implements View.OnTouchListener {
                 p.setStrokeWidth(lineWith);
                 p.setAntiAlias(true);
                 points.add(new PaintPoint(motionEvent.getX(), motionEvent.getY(), true, p));
-                // 화면을 갱신함 -> onDraw()를 호출
                 invalidate();
                 break;
-            // 아래 작업을 안하게 되면 선이 어색하게 그려지는 현상 발생
-            // ex) 점을 찍고 이동한 뒤에 점을 찍는 경우
             case MotionEvent.ACTION_UP:
                 break;
             case MotionEvent.ACTION_DOWN:
                 points.add(new PaintPoint(motionEvent.getX(), motionEvent.getY(), false, null));
                 break;
         }
-        // System.out.println("DrawingView.onTouch - " + points);
-        // return false 로 하게되면 이벤트가 한번 발생하고 종료 -> 점을 그림
         return true;
     }
 
@@ -74,8 +69,6 @@ public class DrawingView extends View implements View.OnTouchListener {
         super.onDraw(canvas);
         for (int i = 1; i < points.size(); i++) {
             if (!points.get(i).isDraw()) continue;
-            // 선을 그려줌
-            // canvas.drawLine( 이전 좌표, 현재 좌표, 선 속성 );
             canvas.drawLine(points.get(i - 1).getX(), points.get(i - 1).getY(), points.get(i).getX(), points.get(i).getY(), points.get(i).getPaint());
         }
     }
